@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
 import com.berkaykurtoglu.securevisage.presentation.EntryScreen.components.CameraModalBottom
@@ -73,7 +74,9 @@ fun EntryScreen(
             Image(
                 painter = painterResource(id = R.drawable.secure_visage),
                 contentDescription = "logo",
-                modifier  = Modifier.align(Alignment.TopCenter).padding(top = 25.dp)
+                modifier  = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 25.dp)
             )
             ElevatedCard(
                 modifier = Modifier
@@ -82,7 +85,9 @@ fun EntryScreen(
                     .wrapContentSize(),
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 50.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 50.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
