@@ -1,7 +1,9 @@
 [versions]
+accompanistPermissions = "0.35.0-alpha"
 agp = "8.3.1"
 authenticator = "1.1.0"
 awsApi = "2.14.11"
+coilCompose = "2.6.0"
 desugar_jdk_libs = "2.0.4"
 hiltAndroid = "2.48"
 hiltAndroidCompiler = "2.48"
@@ -19,6 +21,7 @@ composeBom = "2024.03.00"
 navigationCompose = "2.7.7"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
@@ -28,6 +31,7 @@ authenticator = { module = "com.amplifyframework.ui:authenticator", version.ref 
 aws-api = { module = "com.amplifyframework:aws-api", version.ref = "awsApi" }
 aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.ref = "awsApi" }
 aws-datastore = { module = "com.amplifyframework:aws-datastore", version.ref = "awsApi" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }

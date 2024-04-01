@@ -87,6 +87,7 @@ dependencies {
     implementation (libs.aws.api)
     implementation (libs.aws.datastore)
     implementation (libs.aws.auth.cognito)
+    implementation ("com.amplifyframework:aws-storage-s3:2.14.11")
 
     // Authenticator dependency
     implementation (libs.authenticator)
@@ -112,7 +113,10 @@ dependencies {
     kapt (libs.hilt.android.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
 
-    implementation ("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+    //Permission Accomphanist
+    implementation (libs.accompanist.permissions)
 
+    //Coil
+    implementation(libs.coil.compose)
 
 }
