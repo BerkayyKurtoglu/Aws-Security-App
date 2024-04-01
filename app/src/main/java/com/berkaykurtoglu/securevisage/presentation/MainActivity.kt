@@ -17,7 +17,9 @@ import com.berkaykurtoglu.securevisage.presentation.LoginScreen.LoginScreen
 import com.berkaykurtoglu.securevisage.presentation.theme.SecureVisageTheme
 import com.berkaykurtoglu.securevisage.utils.ConfigureAWS
 import com.berkaykurtoglu.securevisage.utils.Screens
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
