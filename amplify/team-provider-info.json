@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-securevisage-dev-140218-authRole",
+      "UnauthRoleArn": "arn:aws:iam::471112588895:role/amplify-securevisage-dev-140218-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::471112588895:role/amplify-securevisage-dev-140218-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-securevisage-dev-140218-deployment",
+      "UnauthRoleName": "amplify-securevisage-dev-140218-unauthRole",
+      "StackName": "amplify-securevisage-dev-140218",
+      "StackId": "arn:aws:cloudformation:us-east-1:471112588895:stack/amplify-securevisage-dev-140218/d2079f80-e904-11ee-b98a-0e9dd68b4417",
+      "AmplifyAppId": "d1tfl969gsqrjm"
+    },
+    "categories": {
+      "auth": {
+        "securevisage362f6c33": {}
+      }
+    }
+  }
+}
