@@ -1,8 +1,10 @@
 package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.ui.authenticator.SignedInState
@@ -13,15 +15,19 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileInputStream
 import javax.inject.Inject
 
 @HiltViewModel
 class EntryScreenViewModel @Inject constructor (
-    private val useCases : UseCases
+    private val useCases : UseCases,
+    @ApplicationContext var context : Context
 ) :ViewModel() {
 
     private val _state = mutableStateOf(EntryScreenState())
     val state : State<EntryScreenState> = _state
+
 
     fun uploadUserImage(
         uri : Uri,
@@ -64,6 +70,29 @@ class EntryScreenViewModel @Inject constructor (
 
         }*/
 
+    }
+
+    fun getUserImage(
+        userState: SignedInState
+    ){
+        _state.value = state.value.copy(isLoading = true)
+        useCases.getUserImageUseCase(
+            userName = userState.user.username,
+            file = File("${context.filesDir}/${userState.user.username}.jpeg"),
+            onSuccessListener = {
+                var inputStream = it.file.toUri()
+                println("uri $inputStream")
+                _state.value = state.value.copy(isLoading = false, userImage = inputStream)
+            },
+            onFailureListener = {
+                it.localizedMessage?.let {
+                    _state.value = state.value.copy(isLoading = false, isError = it)
+                }?:{
+                    _state.value = state.value.copy(isLoading = false, isError = "Error Occured")
+                }
+                println("Gettin image failed")
+            }
+        )
     }
 
 }

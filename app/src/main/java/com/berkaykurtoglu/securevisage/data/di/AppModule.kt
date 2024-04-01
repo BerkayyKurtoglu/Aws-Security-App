@@ -4,6 +4,7 @@ import android.content.Context
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageCategory
 import com.berkaykurtoglu.securevisage.data.EntryScreenRepository
+import com.berkaykurtoglu.securevisage.domain.usecases.GetUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
 import dagger.Module
@@ -21,6 +22,7 @@ object AppModule {
     @Provides
     fun provideStorage() : StorageCategory = Amplify.Storage
 
+
     @Singleton
     @Provides
     fun provideEntryRepo(
@@ -32,7 +34,8 @@ object AppModule {
     fun provideUseCases(
         entryScreenRepository: EntryScreenRepository
     ) = UseCases(
-        uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepository)
+        uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepository),
+        getUserImageUseCase = GetUserImageUseCase(entryScreenRepository)
     )
 
 

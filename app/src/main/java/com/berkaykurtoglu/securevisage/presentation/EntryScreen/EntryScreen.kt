@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
+import coil.size.Dimension
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
@@ -68,7 +73,12 @@ fun EntryScreen(
     val showBottomSheet = remember {
         mutableStateOf(false)
     }
-    val state = viewModel.state
+    val state by remember {
+        viewModel.state
+    }
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getUserImage(signedInState)
+    }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -92,7 +102,6 @@ fun EntryScreen(
             println(it.data?.extras!!.get("data") )
         }
     }
-    val cameraPermissionState = rememberPermissionState(permission = android.Manifest.permission.CAMERA)
     val requestCameraPermission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) {
@@ -105,6 +114,7 @@ fun EntryScreen(
         }
     }
 
+    //viewModel.getUserImage(signedInState)
 
     Scaffold {
         Box(
@@ -119,71 +129,12 @@ fun EntryScreen(
                     .align(Alignment.TopCenter)
                     .padding(top = 25.dp)
             )
-            ElevatedCard(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth()
-                    .wrapContentSize(),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 50.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = signedInState.user.username,
-                        modifier = Modifier
-                            .basicMarquee() ,
-                        fontSize = 23.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    ElevatedCard(
-                        modifier = Modifier
-                            .clickable {
-                                scope.launch { showBottomSheet.value = true }
-                            }
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.icon_face_id),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .padding(30.dp)
-                        )
-                    }
-                }
-                /*Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-
-                }
-                /*Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.face_icon),
-                        contentDescription = "",
-                        modifier = Modifier.padding(bottom = 80.dp)
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Button(onClick = {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            state.signOut()
-                        }
-                    }) {
-                        Text(text = "Sign Out")
-                    }
-                }*/*/
-            }
-            /*if (state.value.isLoading){
+            if (state.isLoading){
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
+            }else if (state.isError.isNotBlank()){
+                Text(text = "There is an error")
             }else{
                 ElevatedCard(
                     modifier = Modifier
@@ -212,11 +163,16 @@ fun EntryScreen(
                                     scope.launch { showBottomSheet.value = true }
                                 }
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_face_id),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .padding(30.dp)
+                            SubcomposeAsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(state.userImage)
+                                    .error(R.drawable.icon_face_id)
+                                    .size(500,500)
+                                    .build(),
+                                contentDescription = "User Image",
+                                loading = {
+                                    CircularProgressIndicator()
+                                }
                             )
                         }
                     }
@@ -246,7 +202,7 @@ fun EntryScreen(
                         }
                     }*/*/
                 }
-            }*/
+            }
         }
 
         if (showBottomSheet.value) {
