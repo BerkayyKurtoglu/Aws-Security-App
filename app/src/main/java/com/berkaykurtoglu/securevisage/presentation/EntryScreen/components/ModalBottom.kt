@@ -45,7 +45,8 @@ import kotlinx.coroutines.launch
 fun CameraModalBottom(
     state : SheetState,
     onDismissListener : () -> Unit,
-    onPickPhotoClicked : () -> Unit
+    onPickPhotoClicked : () -> Unit,
+    onOpenCameraClicked : () -> Unit
 ) {
 
     ModalBottomSheet(
@@ -85,7 +86,7 @@ fun CameraModalBottom(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedIconButton(
-                    onClick = {  },
+                    onClick = { onOpenCameraClicked() },
                     border = BorderStroke(1.dp,color = Color.LightGray),
                     ){
                     Icon(

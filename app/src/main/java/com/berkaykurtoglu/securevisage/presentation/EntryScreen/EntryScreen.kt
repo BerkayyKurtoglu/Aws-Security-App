@@ -1,6 +1,9 @@
 package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,9 +41,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
 import com.berkaykurtoglu.securevisage.presentation.EntryScreen.components.CameraModalBottom
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalPermissionsApi::class
+)
 @Composable
 fun EntryScreen(
     state : SignedInState
@@ -62,6 +70,26 @@ fun EntryScreen(
             bottomSheetState.hide()
         }
         showBottomSheet.value = false
+    }
+    val pictureResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ){
+        if (it.resultCode == RESULT_OK){
+            println(it.data?.extras!!.get("data") )
+
+        }
+    }
+    val cameraPermissionState = rememberPermissionState(permission = android.Manifest.permission.CAMERA)
+    val requestCameraPermission = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) {
+        if (it){
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra("outputFormat", android.graphics.Bitmap.CompressFormat.JPEG.toString())
+            pictureResultLauncher.launch(intent)
+        }else{
+
+        }
     }
 
 
@@ -139,7 +167,6 @@ fun EntryScreen(
                     }
                 }*/*/
             }
-
         }
 
         if (showBottomSheet.value) {
@@ -151,6 +178,11 @@ fun EntryScreen(
                 onPickPhotoClicked = {
                     photoPickerLauncher.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    )
+                },
+                onOpenCameraClicked = {
+                    requestCameraPermission.launch(
+                        android.Manifest.permission.CAMERA
                     )
                 }
             )
