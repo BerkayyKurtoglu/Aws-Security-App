@@ -2,6 +2,7 @@ package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
@@ -33,12 +34,12 @@ class EntryScreenViewModel @Inject constructor (
         uri : Uri,
         userState : SignedInState
     ){
-        println("viewmodel woring")
             val result = useCases.uploadUserImageUseCase(uri,userState.user.username)
             when(result){
 
                 is Resource.Success ->{
                     _state.value = state.value.copy(isLoading = false, userImage = uri)
+                    Toast.makeText(context,"Resim başarılı şekilde değiştirildi",Toast.LENGTH_LONG).show()
                 }
                 is Resource.Loading ->{
                     _state.value = state.value.copy()

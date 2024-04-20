@@ -56,14 +56,11 @@ class EntryScreenRepository(
                     {},
                     {}
                 )
-                println("success")
                 Resource.Success(true)
             }else{
-                println("stream null")
                 Resource.Error("Stream is null")
             }
         }catch (e : StorageException){
-            println("error")
             return e.localizedMessage?.let { Resource.Error(it) } ?: Resource.Error("Error occured")
         }
     }

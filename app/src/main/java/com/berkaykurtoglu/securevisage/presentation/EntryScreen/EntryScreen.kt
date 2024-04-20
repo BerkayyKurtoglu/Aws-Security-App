@@ -84,13 +84,11 @@ fun EntryScreen(
         contract = ActivityResultContracts.PickVisualMedia()
     ) {
         it?.let {
-            println("selected")
             viewModel.uploadUserImage(
                 uri = it,
                 signedInState
             )
         } ?: {
-            println("image error")
             Toast.makeText(context, "an error occured, please try again", Toast.LENGTH_LONG).show()
         }
         showBottomSheet.value = false
