@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -118,5 +119,8 @@ dependencies {
 
     //Coil
     implementation(libs.coil.compose)
+
+    //Firebase BOM
+    implementation(platform(libs.firebase.bom))
 
 }

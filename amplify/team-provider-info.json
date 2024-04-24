@@ -17,6 +17,21 @@
       },
       "storage": {
         "securevisagebucket": {}
+      },
+      "analytics": {
+        "securevisage": {},
+        "Pinpoint": {
+          "Name": "securevisage-dev",
+          "Id": "f799f778c1cf42da8d0c3c1d0701f614",
+          "Region": "us-east-1"
+        }
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "securevisage-dev",
+          "Id": "f799f778c1cf42da8d0c3c1d0701f614",
+          "Region": "us-east-1"
+        }
       }
     }
   }

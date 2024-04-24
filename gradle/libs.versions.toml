@@ -5,6 +5,7 @@ authenticator = "1.1.0"
 awsApi = "2.14.11"
 coilCompose = "2.6.0"
 desugar_jdk_libs = "2.0.4"
+firebaseBom = "32.8.1"
 hiltAndroid = "2.48"
 hiltAndroidCompiler = "2.48"
 hiltAndroidCompilerVersion = "2.48"
@@ -33,6 +34,7 @@ aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.r
 aws-datastore = { module = "com.amplifyframework:aws-datastore", version.ref = "awsApi" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android-compiler-v248 = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompilerVersion" }
