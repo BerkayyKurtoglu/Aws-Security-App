@@ -1,0 +1,21 @@
+{
+    "appName": "securevisage",
+    "roleName": "pinpointLambdaRole5f98374f",
+    "cloudformationPolicyName": "cloudformationPolicy5f98374f",
+    "cloudWatchPolicyName": "cloudWatchPolicy5f98374f",
+    "pinpointPolicyName": "pinpointPolicy5f98374f",
+    "authPolicyName": "pinpoint_amplify_5f98374f",
+    "unauthPolicyName": "pinpoint_amplify_5f98374f",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
