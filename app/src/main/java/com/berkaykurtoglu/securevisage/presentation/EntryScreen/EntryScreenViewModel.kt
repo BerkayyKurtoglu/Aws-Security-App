@@ -1,6 +1,7 @@
 package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.State
@@ -32,7 +33,7 @@ class EntryScreenViewModel @Inject constructor (
 
     fun uploadUserImage(
         uri : Uri,
-        userState : SignedInState
+        userState : SignedInState,
     ){
             val result = useCases.uploadUserImageUseCase(uri,userState.user.username)
             when(result){
@@ -91,7 +92,7 @@ class EntryScreenViewModel @Inject constructor (
                 }?:{
                     _state.value = state.value.copy(isLoading = false, isError = "Error Occured")
                 }
-                println("Gettin image failed")
+                println(it.localizedMessage)
             }
         )
     }

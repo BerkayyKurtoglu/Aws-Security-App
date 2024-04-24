@@ -3,8 +3,10 @@ package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -39,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,10 +55,12 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
 import com.berkaykurtoglu.securevisage.presentation.EntryScreen.components.CameraModalBottom
+import com.berkaykurtoglu.securevisage.presentation.LoginScreen.LoginScreen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
     ExperimentalPermissionsApi::class
@@ -97,7 +102,20 @@ fun EntryScreen(
         contract = ActivityResultContracts.StartActivityForResult()
     ){
         if (it.resultCode == RESULT_OK){
-            println(it.data?.extras!!.get("data") )
+            it.data?.extras?.let {
+                val bytes = ByteArrayOutputStream()
+                var bitmap = it.get("data") as Bitmap
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,bytes)
+                val path = MediaStore.Images.Media.insertImage(context.contentResolver,bitmap,signedInState.user.username,null)
+                val uri = Uri.parse(path)
+                viewModel.uploadUserImage(
+                    uri = uri,
+                    signedInState
+                )
+            } ?: {
+                Toast.makeText(context, "an error occured, please try again", Toast.LENGTH_LONG).show()
+            }
+            showBottomSheet.value = false
         }
     }
     val requestCameraPermission = rememberLauncherForActivityResult(
@@ -131,8 +149,6 @@ fun EntryScreen(
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
-            }else if (state.isError.isNotBlank()){
-                Text(text = "There is an error")
             }else{
                 ElevatedCard(
                     modifier = Modifier

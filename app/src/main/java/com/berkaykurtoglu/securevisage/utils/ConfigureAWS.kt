@@ -16,6 +16,7 @@ class ConfigureAWS(
             Amplify.addPlugin(AWSS3StoragePlugin())
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.configure(context)
+
         }
         catch (e : AwsServiceException){
             Toast.makeText(context,e.localizedMessage,Toast.LENGTH_LONG).show()

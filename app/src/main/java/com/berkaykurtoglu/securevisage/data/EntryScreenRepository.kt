@@ -51,7 +51,7 @@ class EntryScreenRepository(
         try {
             return if (stream != null) {
                 storage.uploadInputStream(
-                    "homeowner/${userName}.jpeg",
+                    "homeowner/${userName}/${userName}.jpeg",
                     stream,
                     {},
                     {}
@@ -72,7 +72,7 @@ class EntryScreenRepository(
         onFailureListener : (StorageException) -> Unit
     ) {
             storage.downloadFile(
-                "homeowner/${userName}.jpeg",
+                "homeowner/${userName}/${userName}.jpeg",
                 file,
                 {
                     onSuccessListener(it)
@@ -83,4 +83,8 @@ class EntryScreenRepository(
             )
             Resource.Success(true)
      }
+
+
+
+
 }
