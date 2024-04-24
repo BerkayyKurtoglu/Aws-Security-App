@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isKaptVerbose
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -89,6 +88,7 @@ dependencies {
     implementation (libs.aws.datastore)
     implementation (libs.aws.auth.cognito)
     implementation ("com.amplifyframework:aws-storage-s3:2.14.11")
+    implementation (libs.aws.push.notifications.pinpoint)
 
     // Authenticator dependency
     implementation (libs.authenticator)

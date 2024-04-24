@@ -32,6 +32,7 @@ authenticator = { module = "com.amplifyframework.ui:authenticator", version.ref 
 aws-api = { module = "com.amplifyframework:aws-api", version.ref = "awsApi" }
 aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.ref = "awsApi" }
 aws-datastore = { module = "com.amplifyframework:aws-datastore", version.ref = "awsApi" }
+aws-push-notifications-pinpoint = { module = "com.amplifyframework:aws-push-notifications-pinpoint", version.ref = "awsApi" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
