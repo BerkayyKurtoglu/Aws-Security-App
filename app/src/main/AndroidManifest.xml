@@ -33,7 +33,7 @@
             </intent-filter>
 
             <intent-filter android:autoVerify="true" >
-                <data android:host="test.com"
+                <data android:host="berkayykurtoglu.github.io"
                     android:scheme="https" />
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>

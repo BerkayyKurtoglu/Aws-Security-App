@@ -1,6 +1,8 @@
 package com.berkaykurtoglu.securevisage.presentation
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +22,7 @@ import com.berkaykurtoglu.securevisage.presentation.AlertScreen.AlertScreen
 import com.berkaykurtoglu.securevisage.presentation.LoginScreen.LoginScreen
 import com.berkaykurtoglu.securevisage.presentation.theme.SecureVisageTheme
 import com.berkaykurtoglu.securevisage.utils.ConfigureAWS
+import com.berkaykurtoglu.securevisage.utils.NotificationService
 import com.berkaykurtoglu.securevisage.utils.Screens
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +30,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            ConfigureAWS(applicationContext)
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
         setContent {
             SecureVisageTheme(
                 dynamicColor = false
@@ -36,7 +45,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ConfigureAWS(applicationContext)
                     val navController = rememberNavController()
                     NavHost(navController = navController,startDestination = Screens.LoginScreen.route){
                         composable(Screens.LoginScreen.route){
@@ -46,17 +54,18 @@ class MainActivity : ComponentActivity() {
                             Screens.AlertScreen.route,
                             deepLinks = listOf(
                                 navDeepLink {
-                                    uriPattern = "https://test.com/{id}"
+                                    uriPattern = "https://berkayykurtoglu.github.io/{id}"
                                     action = Intent.ACTION_VIEW
                                 }
                             ),
                             arguments = listOf(
                                 navArgument("id"){
-                                    type = NavType.IntType
-                                    defaultValue = -1
+                                    type = NavType.StringType
                                 }
                             )
                         ){
+                            val data = it.arguments?.getString("id")
+                            println("data : $data")
                             AlertScreen()
                         }
                     }
