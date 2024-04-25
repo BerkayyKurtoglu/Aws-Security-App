@@ -9,9 +9,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amplifyframework.core.Amplify
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
 import com.berkaykurtoglu.securevisage.utils.Resource
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -30,6 +32,24 @@ class EntryScreenViewModel @Inject constructor (
     private val _state = mutableStateOf(EntryScreenState())
     val state : State<EntryScreenState> = _state
 
+    init {
+        /*Amplify.Auth.getCurrentUser(
+            {
+                Amplify.Notifications.Push.identifyUser(
+                    it.userId,
+                    {
+                        println("User identified")
+                    },
+                    {
+
+                    }
+                )
+            },
+            {
+
+            }
+        )*/
+    }
 
     fun uploadUserImage(
         uri : Uri,

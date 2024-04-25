@@ -28,7 +28,6 @@ class NotificationService : FirebaseMessagingService() {
         val notificationPayload = NotificationPayload(NotificationContentProvider.FCM(message.data))
 
         // Amplify should handle notification if it is sent from Pinpoint
-
         val isAmplifyMessage = Amplify.Notifications.Push.shouldHandleNotification(notificationPayload)
         if (isAmplifyMessage) {
             // let Amplify handle foreground and background message received
