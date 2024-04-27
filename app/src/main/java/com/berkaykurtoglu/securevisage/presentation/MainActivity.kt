@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                             )
                         ){
                             val data = it.arguments?.getString("id")
-                            println("data : $data")
+                            println("data 111 : $data")
                             AlertScreen()
                         }
                     }
