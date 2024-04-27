@@ -1,5 +1,6 @@
 package com.berkaykurtoglu.securevisage.presentation.AlertScreen
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.widget.Space
@@ -27,11 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 import com.berkaykurtoglu.securevisage.R
 
 @Composable
@@ -71,11 +74,11 @@ fun AlertScreen(
                 )
                 Spacer(modifier = Modifier.height(15.dp))
                 /*SubcomposeAsyncImage(
-                    model = decodedImage,
+                    model = imageRequestBuilder,
                     contentDescription = "Unknown person",
-                    error = { R.drawable.face_icon }
+                    error = { R.drawable.face_icon },
                 )*/
-                Image(bitmap = decodedImage.asImageBitmap(), contentDescription = "")
+                Image(bitmap = Bitmap.createScaledBitmap(decodedImage, 450, 350, true).asImageBitmap(), contentDescription = "")
                 Spacer(modifier = Modifier.height(15.dp))
                 OutlinedButton(
                     onClick = { /*TODO*/ },
