@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,11 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            ConfigureAWS(applicationContext)
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
 
         setContent {
             SecureVisageTheme(
@@ -65,7 +61,7 @@ class MainActivity : ComponentActivity() {
                             )
                         ){
                             val data = it.arguments?.getString("id")
-                            println("data 111 : $data")
+                            Log.i("MainActivity","data : $data")
                             AlertScreen()
                         }
                     }
