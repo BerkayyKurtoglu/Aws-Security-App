@@ -1,8 +1,6 @@
 package com.berkaykurtoglu.securevisage.presentation
 
-import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -22,8 +20,6 @@ import androidx.navigation.navDeepLink
 import com.berkaykurtoglu.securevisage.presentation.AlertScreen.AlertScreen
 import com.berkaykurtoglu.securevisage.presentation.LoginScreen.LoginScreen
 import com.berkaykurtoglu.securevisage.presentation.theme.SecureVisageTheme
-import com.berkaykurtoglu.securevisage.utils.ConfigureAWS
-import com.berkaykurtoglu.securevisage.utils.NotificationService
 import com.berkaykurtoglu.securevisage.utils.Screens
 import dagger.hilt.android.AndroidEntryPoint
 

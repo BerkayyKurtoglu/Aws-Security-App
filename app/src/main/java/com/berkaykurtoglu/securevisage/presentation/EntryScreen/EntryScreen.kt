@@ -62,8 +62,8 @@ import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
-    ExperimentalPermissionsApi::class
+@OptIn(
+    ExperimentalMaterial3Api::class
 )
 @Composable
 fun EntryScreen(
