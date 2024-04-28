@@ -26,8 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +48,7 @@ fun AlertScreen(
     base64Image?.let {
         replaced = it.replace("_","/")
     }
-    println("replaced : $replaced")
+
     val imageBytes = Base64.decode(replaced, Base64.DEFAULT)
     val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
@@ -73,12 +75,12 @@ fun AlertScreen(
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(15.dp))
-                /*SubcomposeAsyncImage(
-                    model = imageRequestBuilder,
-                    contentDescription = "Unknown person",
-                    error = { R.drawable.face_icon },
-                )*/
-                Image(bitmap = Bitmap.createScaledBitmap(decodedImage, 450, 350, true).asImageBitmap(), contentDescription = "")
+                Image(
+                    bitmap = Bitmap.createScaledBitmap(decodedImage, 450, 350, true).asImageBitmap(),
+                    contentDescription = "Tanınmayan Kişi",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
+                )
                 Spacer(modifier = Modifier.height(15.dp))
                 OutlinedButton(
                     onClick = { /*TODO*/ },
