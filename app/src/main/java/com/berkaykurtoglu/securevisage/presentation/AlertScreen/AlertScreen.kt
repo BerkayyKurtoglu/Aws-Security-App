@@ -76,6 +76,7 @@ fun AlertScreen(
                 )
                 Spacer(modifier = Modifier.height(15.dp))
                 Image(
+
                     bitmap = Bitmap.createScaledBitmap(decodedImage, 450, 350, true).asImageBitmap(),
                     contentDescription = "Tanınmayan Kişi",
                     contentScale = ContentScale.Crop,
