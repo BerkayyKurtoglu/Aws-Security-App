@@ -126,7 +126,9 @@ fun AlertScreen(
                             onValueChange = {
                                 textFieldString = it
                             },
-                            modifier = Modifier.padding(top = 20.dp)
+                            modifier = Modifier.padding(top = 20.dp),
+                            placeholder = { Text(text = "İsim")},
+                            singleLine = true
                         )
                         Spacer(modifier = Modifier.height(10.dp))
 
