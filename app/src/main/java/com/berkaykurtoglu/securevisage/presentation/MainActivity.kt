@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         ){
                             val data = it.arguments?.getString("id")
                             Log.i("MainActivity","data : $data")
-                            AlertScreen()
+                            AlertScreen(navController)
                         }
                     }
 
