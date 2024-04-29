@@ -107,27 +107,25 @@ fun AlertScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.clip(RoundedCornerShape(12.dp))
                 )
-                AnimatedVisibility(visible = isButtonVisible) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Spacer(modifier = Modifier.height(15.dp))
-                        OutlinedButton(
-                            onClick = { /*TODO*/ },
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
-                        ) {
-                            Text(
-                                text = "Tanımıyorum !",
-                                color = MaterialTheme.colorScheme.error,
-                            )
+                if(isButtonVisible){
+                    Spacer(modifier = Modifier.height(15.dp))
+                    OutlinedButton(
+                        onClick = { /*TODO*/ },
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
+                    ) {
+                        Text(
+                            text = "Tanımıyorum !",
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    OutlinedButton(
+                        onClick = {
+                            isTextFieldVisible = true
+                            isButtonVisible = !isButtonVisible
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        OutlinedButton(
-                            onClick = {
-                                isTextFieldVisible = true
-                                isButtonVisible = !isButtonVisible
-                            }
-                        ) {
-                            Text(text = "Tanıyorum")
-                        }
+                    ) {
+                        Text(text = "Tanıyorum")
                     }
                 }
                 AnimatedVisibility(visible = isTextFieldVisible) {
