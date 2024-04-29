@@ -3,24 +3,40 @@ package com.berkaykurtoglu.securevisage.presentation.AlertScreen
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Cancel
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +52,15 @@ fun AlertScreen(
         replaced = it.replace("_","/")
     }
 
+    var isTextFieldVisible by remember {
+        mutableStateOf(false)
+    }
+    var textFieldString by remember {
+        mutableStateOf("")
+    }
+    var isButtonVisible by remember {
+        mutableStateOf(true)
+    }
     val imageBytes = Base64.decode(replaced, Base64.DEFAULT)
     val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
@@ -69,19 +94,71 @@ fun AlertScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.clip(RoundedCornerShape(12.dp))
                 )
-                Spacer(modifier = Modifier.height(15.dp))
-                OutlinedButton(
-                    onClick = { /*TODO*/ },
-                    border = BorderStroke(1.dp,MaterialTheme.colorScheme.error)
-                ) {
-                    Text(
-                        text = "Tanımıyorum !",
-                        color = MaterialTheme.colorScheme.error,
-                    )
+                AnimatedVisibility(visible = isButtonVisible) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Spacer(modifier = Modifier.height(15.dp))
+                        OutlinedButton(
+                            onClick = { /*TODO*/ },
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
+                        ) {
+                            Text(
+                                text = "Tanımıyorum !",
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        OutlinedButton(
+                            onClick = {
+                                isTextFieldVisible = true
+                                isButtonVisible = !isButtonVisible
+                            }
+                        ) {
+                            Text(text = "Tanıyorum")
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                OutlinedButton(onClick = { /*TODO*/ }) {
-                    Text(text = "Tanıyorum")
+                AnimatedVisibility(visible = isTextFieldVisible) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        OutlinedTextField(
+                            value = textFieldString,
+                            onValueChange = {
+                                textFieldString = it
+                            },
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            OutlinedButton(
+                                onClick = {
+                                    isTextFieldVisible = false
+                                    isButtonVisible = true
+                                },
+                                border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.error)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Cancel,
+                                    contentDescription = "",
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(10.dp))
+                            OutlinedButton(
+                                onClick = { /*TODO*/ },
+                                border = BorderStroke(0.5.dp, Color.Gray)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Check,
+                                    contentDescription = ""
+                                )
+                            }
+                        }
+                    }
                 }
 
             }

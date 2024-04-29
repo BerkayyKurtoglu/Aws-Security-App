@@ -60,7 +60,6 @@ fun EntryScreen(
     context : Context = LocalContext.current
 ) {
 
-
     val bottomSheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     val showBottomSheet = remember {
