@@ -51,14 +51,27 @@ class EntryScreenViewModel @Inject constructor (
         )*/
     }
 
-    fun uploadUserImage(
+
+    fun onEvent(event : EntryScreenEvent){
+        when(event){
+            is EntryScreenEvent.OnUploadUserImageEvent -> {
+                uploadUserImage(event.uri,event.userName)
+            }
+            is EntryScreenEvent.OnGetUserImageEvent -> {
+                getUserImage(event.userState)
+            }
+        }
+    }
+
+
+    private fun uploadUserImage(
         uri : Uri,
-        userState : SignedInState,
+        userName : String,
     ){
         _state.value = state.value.copy(isLoading = true)
             useCases.uploadUserImageUseCase(
                 uri,
-                userState.user.username,
+                userName,
                 onSuccessListener = {
                     _state.value = state.value.copy(isLoading = false, userImage = uri)
                 },
@@ -90,7 +103,7 @@ class EntryScreenViewModel @Inject constructor (
 
     }
 
-    fun getUserImage(
+    private fun getUserImage(
         userState: SignedInState
     ){
         _state.value = state.value.copy(isLoading = true)

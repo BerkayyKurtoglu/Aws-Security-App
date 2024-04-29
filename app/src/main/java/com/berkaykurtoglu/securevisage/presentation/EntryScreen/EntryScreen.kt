@@ -69,17 +69,14 @@ fun EntryScreen(
         viewModel.state
     }
     LaunchedEffect(key1 = Unit) {
-        viewModel.getUserImage(signedInState)
+        viewModel.onEvent(EntryScreenEvent.OnGetUserImageEvent(signedInState))
     }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) {
         it?.let {
-            viewModel.uploadUserImage(
-                uri = it,
-                signedInState
-            )
+            viewModel.onEvent(EntryScreenEvent.OnUploadUserImageEvent(it,signedInState.user.username))
         } ?: {
             Toast.makeText(context, "an error occured, please try again", Toast.LENGTH_LONG).show()
         }
@@ -95,10 +92,7 @@ fun EntryScreen(
                 bitmap.compress(Bitmap.CompressFormat.PNG,100,bytes)
                 val path = MediaStore.Images.Media.insertImage(context.contentResolver,bitmap,signedInState.user.username,null)
                 val uri = Uri.parse(path)
-                viewModel.uploadUserImage(
-                    uri = uri,
-                    signedInState
-                )
+                viewModel.onEvent(EntryScreenEvent.OnUploadUserImageEvent(uri,signedInState.user.username))
             } ?: {
                 Toast.makeText(context, "an error occured, please try again", Toast.LENGTH_LONG).show()
             }
