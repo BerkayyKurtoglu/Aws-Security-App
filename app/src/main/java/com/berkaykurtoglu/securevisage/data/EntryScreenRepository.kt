@@ -6,6 +6,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageCategory
 import com.amplifyframework.storage.StorageException
 import com.amplifyframework.storage.result.StorageDownloadFileResult
+import com.amplifyframework.storage.result.StorageUploadInputStreamResult
 import com.berkaykurtoglu.securevisage.utils.Resource
 import java.io.File
 import javax.inject.Singleton
@@ -45,23 +46,24 @@ class EntryScreenRepository(
 
     fun uploadUserImage(
         uri : Uri,
-        userName : String
-    ) : Resource<Boolean>? {
+        userName : String,
+        onSuccessListener : (StorageUploadInputStreamResult) -> Unit,
+        onFailureListener : (Exception) -> Unit
+    ) {
         val stream = context.contentResolver.openInputStream(uri)
-        try {
-            return if (stream != null) {
-                storage.uploadInputStream(
-                    "homeowner/${userName}.jpeg",
-                    stream,
-                    {},
-                    {}
-                )
-                Resource.Success(true)
-            }else{
-                Resource.Error("Stream is null")
-            }
-        }catch (e : StorageException){
-            return e.localizedMessage?.let { Resource.Error(it) } ?: Resource.Error("Error occured")
+        stream?.let {
+            storage.uploadInputStream(
+                "homeowner/${userName}.jpeg",
+                stream,
+                {
+                    onSuccessListener(it)
+                },
+                {
+                    onFailureListener(it)
+                }
+            )
+        } ?: {
+            onFailureListener(Exception("Stream is null"))
         }
     }
 

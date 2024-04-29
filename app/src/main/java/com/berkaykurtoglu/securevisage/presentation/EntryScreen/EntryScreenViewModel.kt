@@ -55,22 +55,18 @@ class EntryScreenViewModel @Inject constructor (
         uri : Uri,
         userState : SignedInState,
     ){
-            val result = useCases.uploadUserImageUseCase(uri,userState.user.username)
-            when(result){
-
-                is Resource.Success ->{
+        _state.value = state.value.copy(isLoading = true)
+            useCases.uploadUserImageUseCase(
+                uri,
+                userState.user.username,
+                onSuccessListener = {
                     _state.value = state.value.copy(isLoading = false, userImage = uri)
-                    Toast.makeText(context,"Resim başarılı şekilde değiştirildi",Toast.LENGTH_LONG).show()
+                },
+                onFailureListener = {
+                    _state.value = state.value.copy(isLoading = false, isError = it.localizedMessage ?:" Error occured")
                 }
-                is Resource.Loading ->{
-                    _state.value = state.value.copy()
-                }
-                is Resource.Error ->{
-                    _state.value = state.value.copy(isLoading = false, result.message!!)
-                }
+            )
 
-                null -> TODO()
-            }
         /*seCases.uploadUserImageUseCase(
             uri,
             userState.user.username,
