@@ -18,32 +18,6 @@ class EntryScreenRepositoryImpl(
     val context: Context
 ) : EntryScreenRepository {
 
-    /*fun uploadUserImage(
-        uri : Uri,
-        userName : String
-    ) = flow {
-            println("Repo is working")
-            emit(Resource.Loading())
-            val stream = context.contentResolver.openInputStream(uri)
-            try {
-                if (stream != null) {
-                    storage.uploadInputStream(
-                        userName,
-                        stream,
-                        {},
-                        {}
-                    )
-                    emit(Resource.Success(true))
-                    println("success")
-                }else{
-                    emit(Resource.Error("Stream is null"))
-                    println("error")
-                }
-            }catch (e : StorageException){
-                println("repo error")
-                emit(Resource.Error(e.localizedMessage))
-            }
-        }*/
 
     override fun uploadUserImage(
         uri : Uri,

@@ -9,6 +9,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
+import com.berkaykurtoglu.securevisage.utils.bitmapToUri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.ByteArrayOutputStream
@@ -36,7 +37,7 @@ class AlertScreenViewModel @Inject constructor(
 
         _state.value = state.value.copy(isLoading = true)
         useCases.uploadUserImageUseCase(
-            bitmapToUri(bitmap),
+            bitmap.bitmapToUri(context = context),
             userName,
             onSuccessListener = {
                 _state.value = state.value.copy(isLoading = false, isSuccess = true)
