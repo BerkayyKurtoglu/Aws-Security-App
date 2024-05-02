@@ -37,3 +37,5 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 /app/google-services.json
+/.idea/studiobot.xml
+/.idea/deploymentTargetSelector.xml
