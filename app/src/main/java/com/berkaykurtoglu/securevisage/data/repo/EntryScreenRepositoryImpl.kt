@@ -38,7 +38,7 @@ class EntryScreenRepositoryImpl(
                 }
             )
         } ?: {
-            onFailureListener(Exception("Stream is null"))
+            onFailureListener(Exception("Error occurred"))
         }
     }
 

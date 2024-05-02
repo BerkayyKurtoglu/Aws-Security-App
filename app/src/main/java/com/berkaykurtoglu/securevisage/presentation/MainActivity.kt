@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.berkaykurtoglu.securevisage.presentation.AppNav.AppNavigation
 import com.berkaykurtoglu.securevisage.presentation.theme.SecureVisageTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.berkaykurtoglu.securevisage.presentation
+package com.berkaykurtoglu.securevisage.presentation.AppNav
 
 import android.content.Intent
 import android.util.Log

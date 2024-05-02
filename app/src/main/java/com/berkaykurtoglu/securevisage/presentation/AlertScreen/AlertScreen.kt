@@ -19,16 +19,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -110,7 +107,9 @@ fun AlertScreen(
                 if(isButtonVisible){
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                                  viewModel.onEvent(AlertScreenEvent.OnAddUnknownUserEvent(bitmap = decodedImage))
+                        },
                         border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
                     ) {
                         Text(
@@ -175,7 +174,7 @@ fun AlertScreen(
                                 OutlinedButton(
                                     onClick = {
                                         Log.i("AlertScreen","Working")
-                                        viewModel.onEvent(AlertScreenEvent.OnAddUserEvent(
+                                        viewModel.onEvent(AlertScreenEvent.OnAddKnownUserEvent(
                                             textFieldString,
                                             decodedImage
                                         ))
