@@ -3,7 +3,8 @@ package com.berkaykurtoglu.securevisage.data.di
 import android.content.Context
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageCategory
-import com.berkaykurtoglu.securevisage.data.EntryScreenRepository
+import com.berkaykurtoglu.securevisage.data.repo.EntryScreenRepositoryImpl
+import com.berkaykurtoglu.securevisage.domain.repo.EntryScreenRepository
 import com.berkaykurtoglu.securevisage.domain.usecases.GetUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
@@ -27,15 +28,15 @@ object AppModule {
     @Provides
     fun provideEntryRepo(
         @ApplicationContext context : Context
-    ) = EntryScreenRepository(context = context)
+    ) = EntryScreenRepositoryImpl(context = context)
 
     @Singleton
     @Provides
     fun provideUseCases(
-        entryScreenRepository: EntryScreenRepository
+        entryScreenRepositoryImpl: EntryScreenRepositoryImpl
     ) = UseCases(
-        uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepository),
-        getUserImageUseCase = GetUserImageUseCase(entryScreenRepository)
+        uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepositoryImpl),
+        getUserImageUseCase = GetUserImageUseCase(entryScreenRepositoryImpl)
     )
 
 

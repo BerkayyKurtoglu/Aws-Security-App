@@ -2,13 +2,14 @@ package com.berkaykurtoglu.securevisage.domain.usecases
 
 import com.amplifyframework.storage.StorageException
 import com.amplifyframework.storage.result.StorageDownloadFileResult
-import com.berkaykurtoglu.securevisage.data.EntryScreenRepository
+import com.berkaykurtoglu.securevisage.data.repo.EntryScreenRepositoryImpl
+import com.berkaykurtoglu.securevisage.domain.repo.EntryScreenRepository
 import java.io.File
 import javax.inject.Singleton
 
 @Singleton
 class GetUserImageUseCase(
-    private val entryScreenRepository: EntryScreenRepository
+    private val entryScreenRepositoryImpl: EntryScreenRepository
 ) {
 
 
@@ -17,7 +18,7 @@ class GetUserImageUseCase(
         file : File,
         onSuccessListener : (StorageDownloadFileResult) -> Unit,
         onFailureListener : (StorageException) -> Unit
-    ) = entryScreenRepository.getUserImage(
+    ) = entryScreenRepositoryImpl.getUserImage(
         userName, file, onSuccessListener, onFailureListener
     )
 

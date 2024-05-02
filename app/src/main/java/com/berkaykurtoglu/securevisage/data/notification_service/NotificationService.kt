@@ -1,4 +1,4 @@
-package com.berkaykurtoglu.securevisage.utils
+package com.berkaykurtoglu.securevisage.data.notification_service
 
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.notifications.pushnotifications.NotificationContentProvider

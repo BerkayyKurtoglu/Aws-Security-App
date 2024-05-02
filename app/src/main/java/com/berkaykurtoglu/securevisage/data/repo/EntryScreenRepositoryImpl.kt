@@ -1,4 +1,4 @@
-package com.berkaykurtoglu.securevisage.data
+package com.berkaykurtoglu.securevisage.data.repo
 
 import android.content.Context
 import android.net.Uri
@@ -7,15 +7,16 @@ import com.amplifyframework.storage.StorageCategory
 import com.amplifyframework.storage.StorageException
 import com.amplifyframework.storage.result.StorageDownloadFileResult
 import com.amplifyframework.storage.result.StorageUploadInputStreamResult
+import com.berkaykurtoglu.securevisage.domain.repo.EntryScreenRepository
 import com.berkaykurtoglu.securevisage.utils.Resource
 import java.io.File
 import javax.inject.Singleton
 
 @Singleton
-class EntryScreenRepository(
+class EntryScreenRepositoryImpl(
     private val storage : StorageCategory = Amplify.Storage,
     val context: Context
-) {
+) : EntryScreenRepository {
 
     /*fun uploadUserImage(
         uri : Uri,
@@ -44,7 +45,7 @@ class EntryScreenRepository(
             }
         }*/
 
-    fun uploadUserImage(
+    override fun uploadUserImage(
         uri : Uri,
         userName : String,
         onSuccessListener : (StorageUploadInputStreamResult) -> Unit,
@@ -67,7 +68,7 @@ class EntryScreenRepository(
         }
     }
 
-    fun getUserImage(
+    override fun getUserImage(
         userName : String,
         file : File,
         onSuccessListener : (StorageDownloadFileResult) -> Unit,
