@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-securevisage-dev-140218-unauthRole",
       "StackName": "amplify-securevisage-dev-140218",
       "StackId": "arn:aws:cloudformation:us-east-1:471112588895:stack/amplify-securevisage-dev-140218/d2079f80-e904-11ee-b98a-0e9dd68b4417",
-      "AmplifyAppId": "d1tfl969gsqrjm"
+      "AmplifyAppId": "d1tfl969gsqrjm",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-securevisage-dev-140218-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {

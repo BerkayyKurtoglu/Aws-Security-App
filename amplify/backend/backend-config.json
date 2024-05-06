@@ -5,6 +5,7 @@
       "service": "Pinpoint"
     }
   },
+  "api": {},
   "auth": {
     "securevisage362f6c33": {
       "customAuth": false,
@@ -31,6 +32,7 @@
       "service": "Cognito"
     }
   },
+  "function": {},
   "notifications": {
     "securevisage": {
       "channels": [
