@@ -6,4 +6,6 @@ sealed class HomeOwnerEvent {
 
     data object OnFirstTimeCall : HomeOwnerEvent()
 
+    data class OnGetHomeOwnerPic(val key : String) : HomeOwnerEvent()
+
 }
