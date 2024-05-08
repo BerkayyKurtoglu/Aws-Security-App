@@ -16,7 +16,7 @@ class HomeOwnerViewModel @Inject constructor(
     private val _uiState = mutableStateOf(HomeOwnerState())
     val uiState : State<HomeOwnerState> = _uiState
 
-    fun OnEvent(event : HomeOwnerEvent){
+    fun onEvent(event : HomeOwnerEvent){
         when(event){
             is HomeOwnerEvent.OnRetryEvent -> {
                 retryGetHomeOwnersList()
@@ -24,7 +24,25 @@ class HomeOwnerViewModel @Inject constructor(
             is HomeOwnerEvent.OnFirstTimeCall ->{
                 getHomeOwnersList()
             }
+            is HomeOwnerEvent.OnGetHomeOwnerPic ->{
+                getHomeOwnerPicture(event.key)
+            }
         }
+    }
+
+    private fun getHomeOwnerPicture(
+        key : String
+    ){
+        _uiState.value = uiState.value.copy(isLoading = true)
+        useCases.getHomeOwnersPicture(
+            key,
+            {
+                _uiState.value  = uiState.value.copy(isLoading = false, selectedUserImage = it.url)
+            },
+            {
+                _uiState.value = uiState.value.copy(isLoading = false, errorMessage = it.localizedMessage ?: "Error")
+            }
+        )
     }
 
     private fun getHomeOwnersList(){
@@ -32,7 +50,7 @@ class HomeOwnerViewModel @Inject constructor(
         useCases.getHomeOwnerList(
             {
                 val names = it.items.map {item->
-                    item.key.substringAfter("/")
+                    item.path.substringAfter("/").substringAfter("/")
                 }
                 _uiState.value = uiState.value.copy(isLoading = false, userList = names)
             },
