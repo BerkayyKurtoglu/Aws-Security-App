@@ -51,7 +51,6 @@ fun HomeOwnersScreen(
                 showBottomSheet.value = true
             }
             if(showBottomSheet.value){
-                // todo : add bottom sheet
                 CustomBottomSheet(
                     sheetState = customBottomSheetState,
                     showBottomSheet = showBottomSheet
