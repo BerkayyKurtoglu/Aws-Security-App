@@ -5,7 +5,9 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageCategory
 import com.berkaykurtoglu.securevisage.data.repo.AlertScreenRepositoryImpl
 import com.berkaykurtoglu.securevisage.data.repo.EntryScreenRepositoryImpl
+import com.berkaykurtoglu.securevisage.data.repo.HomeOwnerRepositoryImpl
 import com.berkaykurtoglu.securevisage.domain.repo.EntryScreenRepository
+import com.berkaykurtoglu.securevisage.domain.usecases.GetHomeOwnersList
 import com.berkaykurtoglu.securevisage.domain.usecases.GetUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUnknownUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUserImageUseCase
@@ -40,13 +42,21 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideHomeOwnerRepo(
+        @ApplicationContext context : Context
+    ) = HomeOwnerRepositoryImpl(context = context)
+
+    @Singleton
+    @Provides
     fun provideUseCases(
         entryScreenRepositoryImpl: EntryScreenRepositoryImpl,
-        alertScreenRepositoryImpl: AlertScreenRepositoryImpl
+        alertScreenRepositoryImpl: AlertScreenRepositoryImpl,
+        homeOwnerRepositoryImpl: HomeOwnerRepositoryImpl
     ) = UseCases(
         uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepositoryImpl),
         getUserImageUseCase = GetUserImageUseCase(entryScreenRepositoryImpl),
-        uploadUnknownImageUseCase = UploadUnknownUserImageUseCase(alertScreenRepositoryImpl)
+        uploadUnknownImageUseCase = UploadUnknownUserImageUseCase(alertScreenRepositoryImpl),
+        getHomeOwnerList = GetHomeOwnersList(homeOwnerRepositoryImpl)
     )
 
 
