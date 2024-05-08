@@ -6,8 +6,7 @@ import com.amplifyframework.storage.result.StorageListResult
 interface HomeOwnerRepository {
 
 
-    fun getUserDetail(
-        path: String,
+    fun getHomeOwnersList(
         onSuccess : (StorageListResult) -> Unit,
         onFailure : (StorageException) -> Unit
     )

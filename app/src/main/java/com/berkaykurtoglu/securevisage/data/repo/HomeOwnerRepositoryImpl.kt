@@ -17,8 +17,7 @@ class HomeOwnerRepositoryImpl(
         .setPageSize(1000)
         .build()
 
-    override fun getUserDetail(
-        path: String,
+    override fun getHomeOwnersList(
         onSuccess : (StorageListResult) -> Unit,
         onFailure : (StorageException) -> Unit
     ) {
