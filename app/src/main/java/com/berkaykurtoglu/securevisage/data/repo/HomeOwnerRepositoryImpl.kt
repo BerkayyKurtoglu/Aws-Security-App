@@ -24,7 +24,7 @@ class HomeOwnerRepositoryImpl(
         onFailure : (StorageException) -> Unit
     ) {
         Amplify.Storage.list(
-            StoragePath.fromString("homeowner/"),
+            StoragePath.fromString("public/homeowner/"),
             options,
             onSuccess,
             onFailure
@@ -32,12 +32,12 @@ class HomeOwnerRepositoryImpl(
     }
 
     override fun getHomeOwnerPicture(
-        path: String,
+        key: String,
         onSuccess: (StorageGetUrlResult) -> Unit,
         onFailure: (StorageException) -> Unit
     ) {
         Amplify.Storage.getUrl(
-            StoragePath.fromString("homeowner/${path}.jpeg"),
+            StoragePath.fromString("/public/homeowner/${key}.jpeg"),
             onSuccess,
             onFailure
         )

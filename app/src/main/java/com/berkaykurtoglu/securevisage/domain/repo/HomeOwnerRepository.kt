@@ -13,7 +13,7 @@ interface HomeOwnerRepository {
     )
 
     fun getHomeOwnerPicture(
-        path : String,
+        key : String,
         onSuccess : (StorageGetUrlResult) -> Unit,
         onFailure : (StorageException) -> Unit
     )

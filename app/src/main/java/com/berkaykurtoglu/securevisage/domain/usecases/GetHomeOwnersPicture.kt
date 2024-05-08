@@ -11,10 +11,10 @@ class GetHomeOwnersPicture(
 ) {
 
     operator fun invoke(
-        path: String,
+        key: String,
         onSuccess: (StorageGetUrlResult) -> Unit,
         onFailure: (StorageException) -> Unit
-    ) = repository.getHomeOwnerPicture(path, onSuccess, onFailure)
+    ) = repository.getHomeOwnerPicture(key, onSuccess, onFailure)
 
 
 }

@@ -32,7 +32,7 @@ fun HomeOwnersScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.OnEvent(HomeOwnerEvent.OnFirstTimeCall)
+        viewModel.onEvent(HomeOwnerEvent.OnFirstTimeCall)
     }
 
     Column(
@@ -44,7 +44,7 @@ fun HomeOwnersScreen(
             CircularProgressIndicator()
         }else if(uiState.value.errorMessage.isNotBlank()){
             ErrorScreen(message = uiState.value.errorMessage){
-                viewModel.OnEvent(HomeOwnerEvent.OnRetryEvent)
+                viewModel.onEvent(HomeOwnerEvent.OnRetryEvent)
             }
         }else{
             UserLazyList(lazyListState = lazyListState, userList = uiState.value.userList) {
