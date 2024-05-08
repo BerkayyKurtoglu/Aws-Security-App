@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.widget.Space
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -16,15 +17,25 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Wifi
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -36,8 +47,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -134,15 +147,14 @@ fun EntryScreen(
                 ElevatedCard(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .fillMaxWidth()
-                        .wrapContentSize(),
+                        .fillMaxWidth(),
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 50.dp),
+                            .padding(vertical = 30.dp, horizontal = 45.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
                             text = signedInState.user.username,
@@ -152,22 +164,67 @@ fun EntryScreen(
                             fontWeight = FontWeight.Bold,
                         )
                         Spacer(modifier = Modifier.height(20.dp))
-                        ElevatedCard(
+                        SubcomposeAsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(state.userImage)
+                                .error(R.drawable.icon_face_id)
+                                .build(),
+                            contentDescription = "User Image",
+                            loading = {
+                                CircularProgressIndicator()
+                            },
                             modifier = Modifier
+                                .clip(RoundedCornerShape(20.dp))
                                 .clickable {
-                                    scope.launch { showBottomSheet.value = true }
+                                    showBottomSheet.value = true
                                 }
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            SubcomposeAsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(state.userImage)
-                                    .error(R.drawable.icon_face_id)
-                                    .size(500,500)
-                                    .build(),
-                                contentDescription = "User Image",
-                                loading = {
-                                    CircularProgressIndicator()
-                                }
+                            FilledTonalButton(
+                                onClick = {
+                                    /* TODO : test the connection*/
+                                },
+                                modifier = Modifier
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Wifi,
+                                    contentDescription = "Wifi Icon"
+                                )
+                            }
+                            FilledTonalButton(
+                                onClick = { /*TODO : get history*/ },
+                                modifier = Modifier
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.History,
+                                    contentDescription = "History Icon"
+                                )
+                            }
+                            FilledTonalButton(
+                                onClick = { /*TODO : see the members pictures */ },
+                                modifier = Modifier
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Home,
+                                    contentDescription = "Home Icon"
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        FilledTonalButton(
+                            onClick = {
+                                      /*TODO : Sign out */
+                                      },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.Logout,
+                                contentDescription = "Log Out Button"
                             )
                         }
                     }
