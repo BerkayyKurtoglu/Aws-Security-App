@@ -2,7 +2,7 @@
 accompanistPermissions = "0.35.0-alpha"
 agp = "8.4.0"
 authenticator = "1.1.0"
-awsApi = "2.14.11"
+awsApi = "2.16.0"
 coilCompose = "2.6.0"
 desugar_jdk_libs = "2.0.4"
 firebaseBom = "32.8.1"
@@ -33,6 +33,7 @@ aws-api = { module = "com.amplifyframework:aws-api", version.ref = "awsApi" }
 aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.ref = "awsApi" }
 aws-datastore = { module = "com.amplifyframework:aws-datastore", version.ref = "awsApi" }
 aws-push-notifications-pinpoint = { module = "com.amplifyframework:aws-push-notifications-pinpoint", version.ref = "awsApi" }
+aws-storage-s3 = { module = "com.amplifyframework:aws-storage-s3", version.ref = "awsApi" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

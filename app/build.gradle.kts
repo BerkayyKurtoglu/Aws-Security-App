@@ -87,7 +87,7 @@ dependencies {
     implementation (libs.aws.api)
     implementation (libs.aws.datastore)
     implementation (libs.aws.auth.cognito)
-    implementation ("com.amplifyframework:aws-storage-s3:2.14.11")
+    implementation (libs.aws.storage.s3)
     implementation (libs.aws.push.notifications.pinpoint)
 
     // Authenticator dependency
