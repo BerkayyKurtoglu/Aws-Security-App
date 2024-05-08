@@ -8,6 +8,7 @@ import com.berkaykurtoglu.securevisage.data.repo.EntryScreenRepositoryImpl
 import com.berkaykurtoglu.securevisage.data.repo.HomeOwnerRepositoryImpl
 import com.berkaykurtoglu.securevisage.domain.repo.EntryScreenRepository
 import com.berkaykurtoglu.securevisage.domain.usecases.GetHomeOwnersList
+import com.berkaykurtoglu.securevisage.domain.usecases.GetHomeOwnersPicture
 import com.berkaykurtoglu.securevisage.domain.usecases.GetUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUnknownUserImageUseCase
 import com.berkaykurtoglu.securevisage.domain.usecases.UploadUserImageUseCase
@@ -56,7 +57,8 @@ object AppModule {
         uploadUserImageUseCase = UploadUserImageUseCase(entryScreenRepositoryImpl),
         getUserImageUseCase = GetUserImageUseCase(entryScreenRepositoryImpl),
         uploadUnknownImageUseCase = UploadUnknownUserImageUseCase(alertScreenRepositoryImpl),
-        getHomeOwnerList = GetHomeOwnersList(homeOwnerRepositoryImpl)
+        getHomeOwnerList = GetHomeOwnersList(homeOwnerRepositoryImpl),
+        getHomeOwnersPicture = GetHomeOwnersPicture(homeOwnerRepositoryImpl)
     )
 
 
