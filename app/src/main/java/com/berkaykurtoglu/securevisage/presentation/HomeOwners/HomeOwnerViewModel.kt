@@ -1,20 +1,30 @@
 package com.berkaykurtoglu.securevisage.presentation.HomeOwners
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet.ModalBottomSheetState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeOwnerViewModel @Inject constructor(
-    private val useCases : UseCases
+    private val useCases : UseCases,
+    @ApplicationContext private val context : Context
 ) : ViewModel() {
 
 
     private val _uiState = mutableStateOf(HomeOwnerState())
     val uiState : State<HomeOwnerState> = _uiState
+
+    private val _sheetState = mutableStateOf(ModalBottomSheetState())
+    val sheetState : State<ModalBottomSheetState> = _sheetState
 
     fun onEvent(event : HomeOwnerEvent){
         when(event){
@@ -33,29 +43,34 @@ class HomeOwnerViewModel @Inject constructor(
     private fun getHomeOwnerPicture(
         key : String
     ){
-        _uiState.value = uiState.value.copy(isLoading = true)
+        _sheetState.value = sheetState.value.copy(bottomSheetIsLoading = true, bottomSheetImage = null)
         useCases.getHomeOwnersPicture(
             key,
+            file = File("${context.filesDir}/${key}.jpeg"),
             {
-                _uiState.value  = uiState.value.copy(isLoading = false, selectedUserImage = it.url)
+                _sheetState.value = sheetState.value.copy(bottomSheetIsLoading = false, bottomSheetImage = it.file.toUri())
             },
             {
-                _uiState.value = uiState.value.copy(isLoading = false, errorMessage = it.localizedMessage ?: "Error")
+                _sheetState.value = sheetState.value.copy(
+                    bottomSheetIsLoading = false,
+                    bottomSheetImage = null,
+                    bottomSheetErrorMessage = it.localizedMessage ?: "Error"
+                )
             }
         )
     }
 
     private fun getHomeOwnersList(){
-        _uiState.value = uiState.value.copy(isLoading = true)
+        _uiState.value = uiState.value.copy(pageIsLoading = true)
         useCases.getHomeOwnerList(
             {
                 val names = it.items.map {item->
                     item.path.substringAfter("/").substringAfter("/")
                 }
-                _uiState.value = uiState.value.copy(isLoading = false, userList = names)
+                _uiState.value = uiState.value.copy(pageIsLoading = false, userList = names)
             },
             {
-                _uiState.value = uiState.value.copy(isLoading = false, errorMessage = it.localizedMessage ?: "Error")
+                _uiState.value = uiState.value.copy(pageIsLoading = false, errorMessage = it.localizedMessage ?: "Error")
             }
         )
     }
