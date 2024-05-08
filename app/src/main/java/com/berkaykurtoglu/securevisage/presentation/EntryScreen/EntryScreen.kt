@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Space
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -55,11 +56,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
 import com.berkaykurtoglu.securevisage.presentation.EntryScreen.components.CameraModalBottom
+import com.berkaykurtoglu.securevisage.utils.Screens
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -68,10 +71,12 @@ import java.io.ByteArrayOutputStream
 )
 @Composable
 fun EntryScreen(
+    navController: NavController,
     signedInState : SignedInState,
     viewModel: EntryScreenViewModel = hiltViewModel(),
     context : Context = LocalContext.current
 ) {
+
 
     val bottomSheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -178,7 +183,6 @@ fun EntryScreen(
                                 .clickable {
                                     showBottomSheet.value = true
                                 }
-                                .fillMaxWidth()
                         )
                         Spacer(modifier = Modifier.height(20.dp))
                         Row(
@@ -186,28 +190,21 @@ fun EntryScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             FilledTonalButton(
-                                onClick = {
-                                    /* TODO : test the connection*/
-                                },
-                                modifier = Modifier
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Wifi,
-                                    contentDescription = "Wifi Icon"
-                                )
-                            }
-                            FilledTonalButton(
                                 onClick = { /*TODO : get history*/ },
-                                modifier = Modifier
+                                modifier = Modifier.weight(1f)
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.History,
                                     contentDescription = "History Icon"
                                 )
                             }
+                            Spacer(modifier = Modifier.width(20.dp))
                             FilledTonalButton(
-                                onClick = { /*TODO : see the members pictures */ },
-                                modifier = Modifier
+                                onClick = {
+                                          /*TODO : see the members pictures */
+                                          navController.navigate(Screens.HomeOwnersScreen.route)
+                                          },
+                                modifier = Modifier.weight(1f)
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.Home,

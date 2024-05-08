@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.berkaykurtoglu.securevisage.presentation.AlertScreen.AlertScreen
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.HomeOwnersScreen
 import com.berkaykurtoglu.securevisage.presentation.LoginScreen.LoginScreen
 import com.berkaykurtoglu.securevisage.utils.Screens
 
@@ -22,7 +23,7 @@ fun AppNavigation(
     val navController = rememberNavController()
     NavHost(navController = navController,startDestination = Screens.LoginScreen.route){
         composable(Screens.LoginScreen.route){
-            LoginScreen()
+            LoginScreen(navController)
         }
         composable(
             Screens.AlertScreen.route,
@@ -41,6 +42,9 @@ fun AppNavigation(
             val data = it.arguments?.getString("id")
             Log.i("MainActivity","data : $data")
             AlertScreen(navController)
+        }
+        composable(Screens.HomeOwnersScreen.route){
+            HomeOwnersScreen()
         }
     }
 
