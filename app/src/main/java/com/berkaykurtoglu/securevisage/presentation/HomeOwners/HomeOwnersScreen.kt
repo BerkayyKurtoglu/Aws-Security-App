@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet.CustomBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,6 +26,9 @@ fun HomeOwnersScreen(
     val lazyListState = rememberLazyListState()
     val uiState = remember {
         viewModel.uiState
+    }
+    val sheetState = remember{
+        viewModel.sheetState
     }
     val customBottomSheetState = rememberModalBottomSheetState()
     val showBottomSheet = remember {
@@ -40,7 +44,7 @@ fun HomeOwnersScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (uiState.value.isLoading){
+        if (uiState.value.pageIsLoading){
             CircularProgressIndicator()
         }else if(uiState.value.errorMessage.isNotBlank()){
             ErrorScreen(message = uiState.value.errorMessage){
@@ -48,12 +52,14 @@ fun HomeOwnersScreen(
             }
         }else{
             UserLazyList(lazyListState = lazyListState, userList = uiState.value.userList) {
+                viewModel.onEvent(HomeOwnerEvent.OnGetHomeOwnerPic(it))
                 showBottomSheet.value = true
             }
             if(showBottomSheet.value){
                 CustomBottomSheet(
                     sheetState = customBottomSheetState,
-                    showBottomSheet = showBottomSheet
+                    showBottomSheet = showBottomSheet,
+                    uiState = sheetState
                 )
             }
         }
