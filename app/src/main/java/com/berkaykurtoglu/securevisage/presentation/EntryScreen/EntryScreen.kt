@@ -46,6 +46,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,10 +60,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.amplifyframework.core.Amplify
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.R
 import com.berkaykurtoglu.securevisage.presentation.EntryScreen.components.CameraModalBottom
 import com.berkaykurtoglu.securevisage.utils.Screens
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -215,7 +218,8 @@ fun EntryScreen(
                         Spacer(modifier = Modifier.height(10.dp))
                         FilledTonalButton(
                             onClick = {
-                                      /*TODO : Sign out */
+                                      Amplify.Auth.signOut {
+                                      }
                                       },
                             modifier = Modifier.fillMaxWidth()
                         ) {
