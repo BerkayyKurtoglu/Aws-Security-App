@@ -11,11 +11,10 @@ class GetHomeOwnersList(
 ) {
 
     operator fun invoke(
-        path : String,
         onSuccess : (StorageListResult) -> Unit,
         onFailure : (StorageException) -> Unit
     ){
-       homeOwnersRepository.getUserDetail(path, onSuccess, onFailure)
+       homeOwnersRepository.getHomeOwnersList(onSuccess, onFailure)
     }
 
 

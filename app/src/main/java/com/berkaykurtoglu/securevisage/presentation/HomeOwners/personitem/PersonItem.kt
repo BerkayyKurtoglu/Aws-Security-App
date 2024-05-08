@@ -1,11 +1,9 @@
 package com.berkaykurtoglu.securevisage.presentation.HomeOwners.personitem
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.automirrored.outlined.ArrowRight
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -18,7 +16,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun PersonItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    person : String,
+    onUserClicked : (person : String) -> Unit
 ) {
 
     Row(
@@ -27,14 +27,14 @@ fun PersonItem(
     ) {
 
         Text(
-            text = "Berkay.Kurtoglu",
+            text = person,
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.weight(1f))
         FilledTonalIconButton(
             onClick = {
-                /*TODO : Show BottomSheet*/
+                onUserClicked(person)
             }
         ) {
             Icon(
