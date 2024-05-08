@@ -1,8 +1,10 @@
 package com.berkaykurtoglu.securevisage.domain.repo
 
 import com.amplifyframework.storage.StorageException
+import com.amplifyframework.storage.result.StorageDownloadFileResult
 import com.amplifyframework.storage.result.StorageGetUrlResult
 import com.amplifyframework.storage.result.StorageListResult
+import java.io.File
 
 interface HomeOwnerRepository {
 
@@ -14,7 +16,8 @@ interface HomeOwnerRepository {
 
     fun getHomeOwnerPicture(
         key : String,
-        onSuccess : (StorageGetUrlResult) -> Unit,
+        file : File,
+        onSuccess : (StorageDownloadFileResult) -> Unit,
         onFailure : (StorageException) -> Unit
     )
 

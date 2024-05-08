@@ -5,9 +5,11 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.StorageException
 import com.amplifyframework.storage.StoragePath
 import com.amplifyframework.storage.options.StoragePagedListOptions
+import com.amplifyframework.storage.result.StorageDownloadFileResult
 import com.amplifyframework.storage.result.StorageGetUrlResult
 import com.amplifyframework.storage.result.StorageListResult
 import com.berkaykurtoglu.securevisage.domain.repo.HomeOwnerRepository
+import java.io.File
 import javax.inject.Singleton
 
 @Singleton
@@ -33,11 +35,13 @@ class HomeOwnerRepositoryImpl(
 
     override fun getHomeOwnerPicture(
         key: String,
-        onSuccess: (StorageGetUrlResult) -> Unit,
+        file : File,
+        onSuccess: (StorageDownloadFileResult) -> Unit,
         onFailure: (StorageException) -> Unit
     ) {
-        Amplify.Storage.getUrl(
-            StoragePath.fromString("/public/homeowner/${key}.jpeg"),
+        Amplify.Storage.downloadFile(
+            StoragePath.fromString("public/homeowner/$key.jpeg"),
+            file,
             onSuccess,
             onFailure
         )

@@ -5,8 +5,7 @@ import java.net.URL
 data class HomeOwnerState(
 
     val userList: List<String> = mutableListOf(),
-    val isLoading: Boolean = false,
+    val pageIsLoading: Boolean = false,
     val errorMessage: String = "",
-    val selectedUserImage : URL? = null
 
 )
