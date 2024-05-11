@@ -6,6 +6,13 @@ export type AmplifyDependentResourcesAttributes = {
       "appName": "string"
     }
   },
+  "api": {
+    "SecureVisage": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
     "securevisage362f6c33": {
       "AppClientID": "string",

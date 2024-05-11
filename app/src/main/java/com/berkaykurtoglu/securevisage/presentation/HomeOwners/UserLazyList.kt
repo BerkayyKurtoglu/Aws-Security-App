@@ -22,10 +22,12 @@ fun UserLazyList(
     LazyColumn(
         state = lazyListState,
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp),
+        contentPadding = PaddingValues(horizontal = 25.dp, vertical = 25.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(userList.map { it.substringBeforeLast(".")}){
+        items(
+            userList.map { it.substringBeforeLast(".")}
+        ){
             PersonItem(
                 person = it,
                 onUserClicked = onUserClicked

@@ -84,11 +84,13 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     // Amplify API and Datastore dependencies
+    implementation ("com.amplifyframework:core:2.16.1")
     implementation (libs.aws.api)
     implementation (libs.aws.datastore)
     implementation (libs.aws.auth.cognito)
     implementation (libs.aws.storage.s3)
     implementation (libs.aws.push.notifications.pinpoint)
+    implementation (libs.aws.datastore.v216)
 
     // Authenticator dependency
     implementation (libs.authenticator)

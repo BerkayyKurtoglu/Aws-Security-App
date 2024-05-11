@@ -1,26 +1,17 @@
 package com.berkaykurtoglu.securevisage.presentation.EntryScreen
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.amplifyframework.core.Amplify
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.amplifyframework.ui.authenticator.SignedInState
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
-import com.berkaykurtoglu.securevisage.utils.Resource
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileInputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,25 +22,6 @@ class EntryScreenViewModel @Inject constructor (
 
     private val _state = mutableStateOf(EntryScreenState())
     val state : State<EntryScreenState> = _state
-
-    init {
-        /*Amplify.Auth.getCurrentUser(
-            {
-                Amplify.Notifications.Push.identifyUser(
-                    it.userId,
-                    {
-                        println("User identified")
-                    },
-                    {
-
-                    }
-                )
-            },
-            {
-
-            }
-        )*/
-    }
 
 
     fun onEvent(event : EntryScreenEvent){
