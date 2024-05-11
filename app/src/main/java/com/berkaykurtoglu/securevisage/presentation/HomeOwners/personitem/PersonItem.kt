@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowRight
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -38,7 +40,7 @@ fun PersonItem(
             }
         ) {
             Icon(
-                imageVector = Icons.AutoMirrored.Outlined.ArrowRight,
+                imageVector = Icons.Outlined.ArrowDropDown,
                 contentDescription = "See details"
             )
         }
