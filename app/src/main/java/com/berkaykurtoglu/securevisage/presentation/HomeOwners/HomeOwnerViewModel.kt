@@ -1,13 +1,14 @@
 package com.berkaykurtoglu.securevisage.presentation.HomeOwners
 
 import android.content.Context
-import android.util.Log
+import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import com.berkaykurtoglu.securevisage.domain.usecases.UseCases
-import com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet.ModalBottomSheetState
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.addnewusermodalbottom.NewUserSheetState
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.detailsmodalbottomsheet.DetailsModalBottomState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
@@ -23,8 +24,13 @@ class HomeOwnerViewModel @Inject constructor(
     private val _uiState = mutableStateOf(HomeOwnerState())
     val uiState : State<HomeOwnerState> = _uiState
 
-    private val _sheetState = mutableStateOf(ModalBottomSheetState())
-    val sheetState : State<ModalBottomSheetState> = _sheetState
+    private val _detailsSheetState = mutableStateOf(DetailsModalBottomState())
+    val detailsModalBottomState : State<DetailsModalBottomState> = _detailsSheetState
+
+    private val _newUserSheetState = mutableStateOf(NewUserSheetState())
+    val newUserSheetState : State<NewUserSheetState> = _newUserSheetState
+
+    val usersName = mutableStateOf("")
 
     fun onEvent(event : HomeOwnerEvent){
         when(event){
@@ -37,21 +43,52 @@ class HomeOwnerViewModel @Inject constructor(
             is HomeOwnerEvent.OnGetHomeOwnerPic ->{
                 getHomeOwnerPicture(event.key)
             }
+            is HomeOwnerEvent.OnUploadNewUser -> {
+                addNewUser(event.name, event.uri)
+            }
         }
+    }
+
+    private fun addNewUser(
+        name : String,
+        uri : Uri
+    ){
+        _newUserSheetState.value = newUserSheetState.value.copy(
+            bottomSheetIsLoading = true
+        )
+        useCases.uploadUserImageUseCase(
+            uri,
+            name,
+            {
+                _newUserSheetState.value = newUserSheetState.value.copy(
+                    bottomSheetIsLoading = false,
+                    bottomSheetErrorMessage = "",
+                    isSuccess = true
+                )
+            },
+            {
+                _newUserSheetState.value = NewUserSheetState(
+                    bottomSheetIsLoading = false,
+                    bottomSheetErrorMessage = it.localizedMessage ?: "Error",
+                    isSuccess = false
+                )
+            }
+        )
+
     }
 
     private fun getHomeOwnerPicture(
         key : String
     ){
-        _sheetState.value = sheetState.value.copy(bottomSheetIsLoading = true, bottomSheetImage = null)
+        _detailsSheetState.value = detailsModalBottomState.value.copy(bottomSheetIsLoading = true, bottomSheetImage = null)
         useCases.getHomeOwnersPicture(
             key,
             file = File("${context.filesDir}/${key}.jpeg"),
             {
-                _sheetState.value = sheetState.value.copy(bottomSheetIsLoading = false, bottomSheetImage = it.file.toUri())
+                _detailsSheetState.value = detailsModalBottomState.value.copy(bottomSheetIsLoading = false, bottomSheetImage = it.file.toUri())
             },
             {
-                _sheetState.value = sheetState.value.copy(
+                _detailsSheetState.value = detailsModalBottomState.value.copy(
                     bottomSheetIsLoading = false,
                     bottomSheetImage = null,
                     bottomSheetErrorMessage = it.localizedMessage ?: "Error"
