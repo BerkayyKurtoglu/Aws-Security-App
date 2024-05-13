@@ -1,5 +1,8 @@
 package com.berkaykurtoglu.securevisage.presentation.HomeOwners
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,49 +51,51 @@ fun HomeOwnersScreen(
         mutableStateOf(false)
     }
 
+    
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ){
+        Log.v("Photo Pick - HomeOwnersScreen", "Photo Uri : $it")
+    }
+
+
     LaunchedEffect(key1 = Unit) {
         viewModel.onEvent(HomeOwnerEvent.OnFirstTimeCall)
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Scaffold(
+        floatingActionButton = {
+            CustomFloatingActionButton(
+                photoPickerLauncher=photoPickerLauncher
+            )
+        }
     ) {
-        /*Spacer(modifier = Modifier.height(15.dp))
-        Row(
-            Modifier.fillMaxWidth().padding(start = 10.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            IconButton(
-                onClick = {
-                /*TODO : navigate back*/
+
+            if (uiState.value.pageIsLoading){
+                CircularProgressIndicator()
+            }else if(uiState.value.errorMessage.isNotBlank()){
+                ErrorScreen(message = uiState.value.errorMessage){
+                    viewModel.onEvent(HomeOwnerEvent.OnRetryEvent)
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = "",
-                    tint = Color.Gray,
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-        }*/
-        if (uiState.value.pageIsLoading){
-            CircularProgressIndicator()
-        }else if(uiState.value.errorMessage.isNotBlank()){
-            ErrorScreen(message = uiState.value.errorMessage){
-                viewModel.onEvent(HomeOwnerEvent.OnRetryEvent)
-            }
-        }else{
-            UserLazyList(lazyListState = lazyListState, userList = uiState.value.userList) {
-                viewModel.onEvent(HomeOwnerEvent.OnGetHomeOwnerPic(it))
-                showBottomSheet.value = true
-            }
-            if(showBottomSheet.value){
-                CustomBottomSheet(
-                    sheetState = customBottomSheetState,
-                    showBottomSheet = showBottomSheet,
-                    uiState = sheetState
-                )
+            }else{
+                UserLazyList(lazyListState = lazyListState, userList = uiState.value.userList) {
+                    viewModel.onEvent(HomeOwnerEvent.OnGetHomeOwnerPic(it))
+                    showBottomSheet.value = true
+                }
+                if(showBottomSheet.value){
+                    CustomBottomSheet(
+                        sheetState = customBottomSheetState,
+                        showBottomSheet = showBottomSheet,
+                        uiState = sheetState
+                    )
+                }
             }
         }
     }
