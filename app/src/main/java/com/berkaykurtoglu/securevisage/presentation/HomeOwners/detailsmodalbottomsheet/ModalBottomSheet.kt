@@ -1,9 +1,7 @@
-package com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet
+package com.berkaykurtoglu.securevisage.presentation.HomeOwners.detailsmodalbottomsheet
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
 import com.berkaykurtoglu.securevisage.utils.uriToBitmap
 
 
@@ -32,7 +29,7 @@ fun CustomBottomSheet(
     modifier: Modifier = Modifier,
     sheetState : SheetState,
     showBottomSheet : MutableState<Boolean>,
-    uiState : State<ModalBottomSheetState>
+    uiState : State<DetailsModalBottomState>
 ) {
 
     ModalBottomSheet(

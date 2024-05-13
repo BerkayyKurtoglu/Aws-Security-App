@@ -1,9 +1,8 @@
-package com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet
+package com.berkaykurtoglu.securevisage.presentation.HomeOwners.detailsmodalbottomsheet
 
 import android.net.Uri
-import java.net.URL
 
-data class ModalBottomSheetState(
+data class DetailsModalBottomState(
 
     val bottomSheetImage : Uri? = null,
     val bottomSheetIsLoading : Boolean = false,

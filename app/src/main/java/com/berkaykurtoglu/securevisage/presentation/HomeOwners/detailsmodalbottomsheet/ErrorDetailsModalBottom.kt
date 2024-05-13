@@ -1,4 +1,4 @@
-package com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet
+package com.berkaykurtoglu.securevisage.presentation.HomeOwners.detailsmodalbottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
