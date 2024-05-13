@@ -1,24 +1,15 @@
 package com.berkaykurtoglu.securevisage.presentation.HomeOwners
 
-import android.util.Log
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -27,10 +18,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.berkaykurtoglu.securevisage.presentation.HomeOwners.modalbottomsheet.CustomBottomSheet
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.addnewusermodalbottom.NewUserBottomSheet
+import com.berkaykurtoglu.securevisage.presentation.HomeOwners.detailsmodalbottomsheet.CustomBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,18 +34,36 @@ fun HomeOwnersScreen(
         viewModel.uiState
     }
     val sheetState = remember{
-        viewModel.sheetState
+        viewModel.detailsModalBottomState
     }
     val customBottomSheetState = rememberModalBottomSheetState()
     val showBottomSheet = remember {
         mutableStateOf(false)
     }
 
+    val newUserSheetState = rememberModalBottomSheetState()
+    val newUserSheetShow = remember {
+        mutableStateOf(false)
+    }
+    val newUserSheetUiState = remember {
+        viewModel.newUserSheetState
+    }
+
+    //create bitmap mutable state
+    val uri = remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val newUserName = remember {
+        mutableStateOf("")
+    }
     
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ){
-        Log.v("Photo Pick - HomeOwnersScreen", "Photo Uri : $it")
+        it?.let {
+            newUserSheetShow.value = true
+            uri.value = it
+        }
     }
 
 
@@ -96,6 +104,19 @@ fun HomeOwnersScreen(
                         uiState = sheetState
                     )
                 }
+                if(newUserSheetShow.value){
+                    NewUserBottomSheet(
+                        sheetState = newUserSheetState,
+                        showBottomSheet = newUserSheetShow,
+                        uiState = newUserSheetUiState,
+                        uri = uri.value,
+                        usersName = newUserName,
+                        onUploadNewUser = {
+                            viewModel.onEvent(HomeOwnerEvent.OnUploadNewUser(it,uri.value!!))
+                        }
+                    )
+                }
+
             }
         }
     }
