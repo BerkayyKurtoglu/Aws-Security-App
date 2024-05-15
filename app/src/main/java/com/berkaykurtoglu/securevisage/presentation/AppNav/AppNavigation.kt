@@ -40,8 +40,7 @@ fun AppNavigation(
             )
         ){
             val data = it.arguments?.getString("id")
-            Log.i("MainActivity","data : $data")
-            AlertScreen(navController)
+            AlertScreen(navController, base64Image = data)
         }
         composable(Screens.HomeOwnersScreen.route){
             HomeOwnersScreen()
