@@ -6,6 +6,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -83,7 +84,7 @@ fun AlertScreen(
     ) {
         
         ElevatedCard(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().animateContentSize()
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
