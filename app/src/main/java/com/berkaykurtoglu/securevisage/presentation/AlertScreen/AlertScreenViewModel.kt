@@ -50,7 +50,7 @@ class AlertScreenViewModel @Inject constructor(
     private fun addUnknownUserImage(
         bitmap: Bitmap
     ) {
-        _state.value = state.value.copy(isLoading = true)
+        _state.value = state.value.copy(isLoading = true, isSuccess = false)
         useCases.uploadUnknownImageUseCase(
             bitmap.bitmapToUri(context = context),
             onSuccessListener = {

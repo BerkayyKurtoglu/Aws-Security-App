@@ -107,25 +107,36 @@ fun AlertScreen(
                 )
                 if(isButtonVisible){
                     Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedButton(
-                        onClick = {
-                                  viewModel.onEvent(AlertScreenEvent.OnAddUnknownUserEvent(bitmap = decodedImage))
-                        },
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
-                    ) {
-                        Text(
-                            text = "Tanımıyorum !",
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    OutlinedButton(
-                        onClick = {
-                            isTextFieldVisible = true
-                            isButtonVisible = !isButtonVisible
+                    if (state.isLoading){
+                        CircularProgressIndicator()
+                    }else if (state.isSuccess){
+                        navHostController.navigate(route = Screens.LoginScreen.route){
+                            popUpTo(Screens.LoginScreen.route)
                         }
-                    ) {
-                        Text(text = "Tanıyorum")
+                        Toast.makeText(LocalContext.current, "Alarm tetiklenmek üzeri bildirildi", Toast.LENGTH_LONG).show()
+                    }else if(state.errorMessage.isNotBlank()){
+                        Text(text = state.errorMessage)
+                    }else{
+                        OutlinedButton(
+                            onClick = {
+                                viewModel.onEvent(AlertScreenEvent.OnAddUnknownUserEvent(bitmap = decodedImage))
+                            },
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
+                        ) {
+                            Text(
+                                text = "Tanımıyorum !",
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        OutlinedButton(
+                            onClick = {
+                                isTextFieldVisible = true
+                                isButtonVisible = !isButtonVisible
+                            }
+                        ) {
+                            Text(text = "Tanıyorum")
+                        }
                     }
                 }
                 AnimatedVisibility(visible = isTextFieldVisible) {
