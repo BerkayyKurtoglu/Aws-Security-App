@@ -39,6 +39,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -134,7 +135,6 @@ fun EntryScreen(
         }
     }
 
-    //viewModel.getUserImage(signedInState)
 
     Scaffold {
         Box(
@@ -188,7 +188,7 @@ fun EntryScreen(
                                 .clickable {
                                     showBottomSheet.value = true
                                 }
-                                .size(250.dp),
+                                .size(170.dp),
                             contentScale = ContentScale.Crop
                         )
                         Spacer(modifier = Modifier.height(20.dp))
